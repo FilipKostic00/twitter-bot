@@ -69,5 +69,7 @@ def home():
     return 'Twitter bot is running!'
 
 if __name__ == '__main__':
+    # Start tweeting
+    tweet()
     # Start the Flask app on the specified port
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
