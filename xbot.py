@@ -14,6 +14,8 @@ CONSUMER_KEY = os.getenv('CONSUMER_KEY')
 CONSUMER_SECRET = os.getenv('CONSUMER_SECRET')
 BEARER_TOKEN = os.getenv('BEARER_TOKEN')
 
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
+
 #PROMPT
 PROMPT = os.getenv('PROMPT')
 
@@ -28,7 +30,7 @@ api = tweepy.Client(bearer_token=BEARER_TOKEN,
                     )
 
 client = OpenAI(
-    api_key="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"
+    api_key=OPENAI_API_KEY
 )
 
 def generate_tweet(prompt):
