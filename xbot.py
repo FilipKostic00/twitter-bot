@@ -1,7 +1,7 @@
 import tweepy
 import time
 from openai import OpenAI
-from flask import Flask
+from quart import Quart
 
 import os
 from dotenv import load_dotenv
@@ -60,16 +60,16 @@ def tweet():
             time.sleep(1)
             print("Time until next tweet: " + f"{int(i/60)}" + "min", end="\r", flush=True)
 
-# Flask app
-app = Flask(__name__)
+# Quart app
+app = Quart(__name__)
 
 # Route for handling HTTP requests
 @app.route('/')
-def home():
+async def home():
     return 'Twitter bot is running!'
 
 if __name__ == '__main__':
     # Start tweeting
     tweet()
-    # Start the Flask app on the specified port
+    # Start the Quart app on the specified port
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))

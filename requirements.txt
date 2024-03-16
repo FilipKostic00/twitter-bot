@@ -1,5 +1,5 @@
 tweepy
 openai
 python-dotenv
-flask
+quart
 uvicorn
