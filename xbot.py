@@ -74,6 +74,6 @@ async def main():
     await tweet()
 
 if __name__ == '__main__':
-    # Start the Quart app and tweeting loop concurrently
-    asyncio.run(main())
+    # Start the Quart app
+    asyncio.create_task(main())
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
