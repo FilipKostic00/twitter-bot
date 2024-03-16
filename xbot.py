@@ -57,18 +57,21 @@ def tweet():
             time.sleep(1)
             print("Time until next tweet: " + f"{int(i/60)}" + "min", end="\r", flush=True)
 
+#For Desktop use
 
-while True:
-    print("Do you want to start twitter bot [Y/N]")
-    response = input()
+# while True:
+#     print("Do you want to start twitter bot [Y/N]")
+#     response = input()
 
-    if (response.upper() == "Y"):
-        print("Twitter bot is starting...")
-        print("Tweets should start appearing soon")
-        tweet()
-    elif (response.upper() == "N"):
-        print("Goodbye!")
-        break
-    else :
-        print("Type 'Y' for Yes and 'N' for No")
-    
+#     if (response.upper() == "Y"):
+#         print("Twitter bot is starting...")
+#         print("Tweets should start appearing soon")
+#         tweet()
+#     elif (response.upper() == "N"):
+#         print("Goodbye!")
+#         break
+#     else :
+#         print("Type 'Y' for Yes and 'N' for No")
+
+#For web service use
+tweet()    
