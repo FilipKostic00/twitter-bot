@@ -2,18 +2,20 @@ import tweepy
 import time
 from openai import OpenAI
 
-#Client ID = "ajltbEtaNG9GMmRhQ1dpQzFqSVk6MTpjaQ"
-#Client Secret = "005fce_KE3CFIfXlLkuG7cXqDPhJnDimOcW51UVBjLD66XpoiC"
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Twitter API credentials
-ACCESS_KEY = '1749892773195522048-pL4Kz3t4faF8Lz0cgManudVpaq8mEH'
-ACCESS_SECRET = '8mSeBSQI5S7nLyeVeZXaIXjizzgw60Zh2MZI5CHcx1dZg'
-CONSUMER_KEY='AQsD4HAiVaBzANK8ixTysD5nm'
-CONSUMER_SECRET='mxkps0IontaFDSEO391f8RgTUTyxnbCzL7z4CjyOgt5DF02ORG'
-BEARER_TOKEN ='AAAAAAAAAAAAAAAAAAAAAHYRswEAAAAAjdtMR2l%2FthncqWuSTCRlGmsI6jU%3DCj2t5oa0F22dPYixE49OzcEDzr4KWAFl4KKA7xBNDvzngELlZq'
+ACCESS_KEY = os.getenv('ACCESS_KEY')
+ACCESS_SECRET = os.getenv('ACCESS_SECRET')
+CONSUMER_KEY = os.getenv('CONSUMER_KEY')
+CONSUMER_SECRET = os.getenv('CONSUMER_SECRET')
+BEARER_TOKEN = os.getenv('BEARER_TOKEN')
 
 #PROMPT
-PROMPT = 'Write me a tweet about farming crypto coin $BLOCK.Needs to sound passionate about new coin. Maybe show some excitement .Needs to be short, max 30 words. Use emojis.Try to use $BLOCK in a sentence .It also needs to include @GetBlockGames at the end. '
+PROMPT = os.getenv('PROMPT')
 
 # Authenticate to Twitter
 auth = tweepy.OAuth1UserHandler(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_KEY, ACCESS_SECRET)
