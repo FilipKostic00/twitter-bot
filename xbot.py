@@ -1,7 +1,5 @@
 import tweepy
-import time
 import asyncio
-from openai import OpenAI
 from quart import Quart
 
 import os
@@ -69,11 +67,10 @@ app = Quart(__name__)
 async def home():
     return 'Twitter bot is running!'
 
-async def main():
-    # Start tweeting asynchronously
-    await tweet()
+@app.before_serving
+async def before_serving():
+    # Start tweeting loop as a background task
+    asyncio.create_task(tweet())
 
 if __name__ == '__main__':
-    # Start the Quart app
-    asyncio.create_task(main())
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
