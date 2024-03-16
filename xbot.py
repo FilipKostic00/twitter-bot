@@ -1,5 +1,6 @@
 import tweepy
 import time
+import asyncio
 from openai import OpenAI
 from quart import Quart
 
@@ -46,7 +47,7 @@ def generate_tweet(prompt):
     )
     return chat_completion.choices[0].message.content  
 
-def tweet():
+async def tweet():
     while True:
         generated_message = generate_tweet(PROMPT)
         try:
@@ -55,9 +56,9 @@ def tweet():
         except tweepy.TweepyException as e:
             print("Error:", e.reason)
 
-        #Print time left for next tweet    
-        for i in range(3600,0,-1):
-            time.sleep(1)
+        # Print time left for next tweet    
+        for i in range(3600, 0, -1):
+            await asyncio.sleep(1)
             print("Time until next tweet: " + f"{int(i/60)}" + "min", end="\r", flush=True)
 
 # Quart app
@@ -68,8 +69,11 @@ app = Quart(__name__)
 async def home():
     return 'Twitter bot is running!'
 
+async def main():
+    # Start tweeting asynchronously
+    await tweet()
+
 if __name__ == '__main__':
-    # Start tweeting
-    tweet()
-    # Start the Quart app on the specified port
+    # Start the Quart app and tweeting loop concurrently
+    asyncio.run(main())
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
