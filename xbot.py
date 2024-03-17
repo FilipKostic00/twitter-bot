@@ -1,14 +1,16 @@
 import tweepy
-import time
 import asyncio
 from openai import OpenAI
 from quart import Quart
-
 import os
+import logging
 from dotenv import load_dotenv
 
-
 load_dotenv()
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 # Twitter API credentials
 ACCESS_KEY = os.getenv('ACCESS_KEY')
@@ -38,13 +40,8 @@ client = OpenAI(
 
 def generate_tweet(prompt):
     chat_completion = client.chat.completions.create(
-    messages=[
-        {
-            "role": "user",
-            "content": prompt,
-        }
-    ],
-    model="gpt-3.5-turbo",
+        messages=[{"role": "user", "content": prompt}],
+        model="gpt-3.5-turbo"
     )
     return chat_completion.choices[0].message.content  
 
@@ -53,11 +50,11 @@ async def tweet():
         generated_message = generate_tweet(PROMPT)
         try:
             api.create_tweet(text=generated_message)
-            print("Tweeted:", generated_message)
+            #logger.info("Tweeted: %s", generated_message)
         except tweepy.TweepyException as e:
-            print("Error:", e.reason)
+            logger.error("Error: %s", e.reason)
 
-        print("Time until next tweet: 40min")
+        #logger.info("Time until next tweet: 40min")
         await asyncio.sleep(2400)    
 
 # Quart app
@@ -67,12 +64,6 @@ app = Quart(__name__)
 @app.route('/')
 async def home():
     return 'Twitter bot is running!'
-
-@app.after_request
-async def add_keep_alive(response):
-    response.headers['Connection'] = 'keep-alive'
-    response.headers['Keep-Alive'] = 'timeout=2401, max=1000'
-    return response
 
 @app.before_serving
 async def before_serving():
