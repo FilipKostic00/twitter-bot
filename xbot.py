@@ -55,7 +55,7 @@ async def tweet():
             logger.error("Error: %s", e.reason)
 
         #logger.info("Time until next tweet: 40min")
-        asyncio.sleep(2400)    
+        await asyncio.sleep(2400)    
 
 # Quart app
 app = Quart(__name__)
