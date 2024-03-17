@@ -1,9 +1,12 @@
 import tweepy
+import time
 import asyncio
+from openai import OpenAI
 from quart import Quart
 
 import os
 from dotenv import load_dotenv
+
 
 load_dotenv()
 
