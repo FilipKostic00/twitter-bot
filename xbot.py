@@ -57,10 +57,8 @@ async def tweet():
         except tweepy.TweepyException as e:
             print("Error:", e.reason)
 
-        # Print time left for next tweet    
-        for i in range(3600, 0, -1):
-            await asyncio.sleep(1)
-            print("Time until next tweet: " + f"{int(i/60)}" + "min", end="\r", flush=True)
+        print("Time until next tweet: 40min")
+        await asyncio.sleep(2400)    
 
 # Quart app
 app = Quart(__name__)
