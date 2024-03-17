@@ -68,6 +68,12 @@ app = Quart(__name__)
 async def home():
     return 'Twitter bot is running!'
 
+@app.after_request
+async def add_keep_alive(response):
+    response.headers['Connection'] = 'keep-alive'
+    response.headers['Keep-Alive'] = 'timeout=2401, max=1000'
+    return response
+
 @app.before_serving
 async def before_serving():
     # Start tweeting loop as a background task
