@@ -50,11 +50,11 @@ async def tweet():
         generated_message = generate_tweet(PROMPT)
         try:
             api.create_tweet(text=generated_message)
-            #logger.info("Tweeted: %s", generated_message)
+            logger.info("Tweeted: %s", generated_message)
         except tweepy.TweepyException as e:
             logger.error("Error: %s", e.reason)
 
-        #logger.info("Time until next tweet: 40min")
+        logger.info("Time until next tweet: 40min")
         await asyncio.sleep(2400)    
 
 # Quart app
@@ -68,7 +68,7 @@ async def home():
 @app.before_serving
 async def before_serving():
     # Start tweeting loop as a background task
-    asyncio.create_task(tweet())
+    await asyncio.create_task(tweet())
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
