@@ -57,11 +57,7 @@ async def tweet():
         logger.info("Tweeted: %s", generated_message)
     except tweepy.TweepyException as e:
         logger.error("Error: %s", e.reason)
-    return 'Tweeted'
-    
-@app.route('/ping', methods=['GET'])
-async def ping():
-    return 'Server pinged successfully'
+    return 'Success'
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
