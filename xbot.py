@@ -59,5 +59,10 @@ async def tweet():
         logger.error("Error: %s", e.reason)
     return 'Success'
 
+@app.route('/ping', methods=['GET'])
+async def ping():
+    logger.info('Server pinged')
+    return 'Pinged'
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
