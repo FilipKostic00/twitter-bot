@@ -45,30 +45,23 @@ def generate_tweet(prompt):
     )
     return chat_completion.choices[0].message.content  
 
-async def tweet():
-    while True:
-        generated_message = generate_tweet(PROMPT)
-        try:
-            api.create_tweet(text=generated_message)
-            #logger.info("Tweeted: %s", generated_message)
-        except tweepy.TweepyException as e:
-            logger.error("Error: %s", e.reason)
-
-        #logger.info("Time until next tweet: 40min")
-        await asyncio.sleep(2400)    
-
 # Quart app
 app = Quart(__name__)
 
 # Route for handling HTTP requests
-@app.route('/')
-async def home():
-    return 'Twitter bot is running!'
-
-@app.before_serving
-async def before_serving():
-    # Start tweeting loop as a background task
-    asyncio.create_task(tweet())
+@app.route('/tweet', methods=['POST'])
+async def tweet():
+    generated_message = generate_tweet(PROMPT)
+    try:
+        api.create_tweet(text=generated_message)
+        logger.info("Tweeted: %s", generated_message)
+    except tweepy.TweepyException as e:
+        logger.error("Error: %s", e.reason)
+    return 'Tweeted'
+    
+@app.route('/ping', methods=['GET'])
+async def ping():
+    return 'Server pinged successfully'
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
